@@ -1,0 +1,105 @@
+// Base units
+second = { "s" }
+meter = { "m" }
+gram = { "g" }
+ampere = { "A" }
+kelvin = { "K" }
+mole = { "mol" }
+candela = { "cd" }
+
+// Derived units
+radian = { "rad" }
+steradian = { "sr" }
+hertz = { "Hz" }
+newton = { "N" }
+pascal = { "Pa" }
+joule = { "J" }
+watt = { "W" }
+coulomb = { "C" }
+volt = { "V" }
+farad = { "F" }
+ohm = { "Ω" | "R" } // warning if Ω used as R as in (5KR or 5MR)
+siemens = { "S" }
+weber = { "Wb" }
+tesla = { "T" }
+henry = { "H" }
+celsius = { "°C" } // can only be used standalone though?
+lumen = { "lm" }
+lux = { "lx" }
+becquerel = { "Bq" }
+gray = { "Gy" }
+sievert = { "Sv" }
+katal = { "kat" }
+
+/// Any unit
+unit = {
+    second | meter | gram | ampere | kelvin | mole | candela |
+    radian | steradian | hertz | newton | pascal | joule | watt | coulomb | volt | farad | ohm |
+    siemens | weber | tesla | henry | celsius | lumen | lux | becquerel | gray | sievert | katal
+}
+
+// Prefixes
+prefix = {
+    deca | deci | hecto | centi | kilo | milli | mega | micro | giga | nano | tera | pico | peta | femto |
+    exa | atto | zetta | zepto | yotta | yocto | ronna | ronto | quetta | quecto
+}
+quetta = { "Q" } // 30
+ronna = { "R" } // 27
+yotta = { "Y" } // 24
+zetta = { "Z" } // 21
+exa = { "E" } // 18
+peta = { "P" } // 15
+tera = { "T" } // 12
+giga = { "G" } // 9
+mega = { "M" } // 6
+kilo = { "k" | "K" } // 3
+hecto = { "h" } // 2
+deca = { "da" } // 1
+deci = { "d" } // -1
+centi = { "c" } // -2
+milli = { "m" } // -3
+micro = { "u" | "μ" } // -6
+nano = { "n" } // -9
+pico = { "p" } // -12
+femto = { "f" } // -15
+atto = { "a" } // -18
+zepto = { "z" } // -21
+yocto = { "y" } // -24
+ronto = { "r" } // -27
+quecto = { "q" } // -30
+
+// Number
+number = { minus? ~ ASCII_DIGIT+ }
+minus = { "-" | "\u{2212}" }
+
+// Operators
+mul = { "*" | "\u{22C5}" }
+div = { "/" }
+power = { "^" }
+paren_open = { "(" }
+paren_close = { ")" }
+
+// Special cases
+r = { "R" } // as in 1R2
+
+// Superscript numbers
+ss_any = { ss_zero | ss_one | ss_two | ss_three | ss_four | ss_five | ss_six | ss_seven | ss_eight | ss_nine }
+ss_number = { ss_minus? ~ ss_any+ }
+ss_zero = { "\u{2070}" }
+ss_one = { "\u{00B9}" }
+ss_two = { "\u{00B2}" }
+ss_three = { "\u{00B3}" }
+ss_four = { "\u{2074}" }
+ss_five = { "\u{2075}" }
+ss_six = { "\u{2076}" }
+ss_seven = { "\u{2077}" }
+ss_eight = { "\u{2078}" }
+ss_nine = { "\u{2079}" }
+ss_minus = { "\u{207B}" }
+
+// Misc
+dot = _{ "." }
+
+// WHITESPACE manual whitespace management
+space = { " "+ } // warning if more than one space is used
+silent_space = _{ " "* }
