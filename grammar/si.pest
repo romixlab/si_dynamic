@@ -18,7 +18,7 @@ watt = { "W" }
 coulomb = { "C" }
 volt = { "V" }
 farad = { "F" }
-ohm = { "Ω" | "R" } // warning if Ω used as R as in (5KR or 5MR)
+ohm = { "Ω" }
 siemens = { "S" }
 weber = { "Wb" }
 tesla = { "T" }
@@ -37,7 +37,7 @@ raw_unit = {
     radian | steradian | hertz | newton | pascal | joule | watt | coulomb | volt | farad | ohm |
     siemens | weber | tesla | henry | celsius | lumen | lux | becquerel | gray | sievert | katal
 }
-term_unit = { prefix? ~ raw_unit ~ (("^" ~ simple_number) | ss_number)? }
+term_unit = { prefix? ~ raw_unit ~ (("^" ~ integer_number) | ss_number)? }
 unit_expr = { paren | (term_unit ~ (verb ~ unit_expr)*) }
 paren = { "(" ~ unit_expr ~ ")" }
 // binary_op = { unit_expr ~ verb ~ unit_expr }
@@ -76,11 +76,11 @@ ronto = { "r" } // -27
 quecto = { "q" } // -30
 
 // Number
-number = { minus? ~ raw_number ~ exponent? }
-simple_number = { minus? ~ raw_number }
+number = { integer_number ~ (exponent | ("." ~ raw_number ~ exponent?) )? }
+integer_number = { minus? ~ raw_number }
 raw_number = { ASCII_DIGIT+ }
 minus = { "-" | "\u{2212}" }
-exponent = { "e" ~ minus? ~ raw_number }
+exponent = { "e" ~ integer_number }
 
 // Operators
 mul = { "*" | "\u{22C5}" }
@@ -89,7 +89,11 @@ paren_open = { "(" }
 paren_close = { ")" }
 
 // Special cases
-r = { "R" } // as in 1R2
+ohm_or_r = { "Ω" | "R" | "r" }
+ohm_unit = { (r_prefix? ~ ohm_or_r) | r_prefix | ohm_or_r }
+r_prefix = { kilo | milli | mega | micro | giga | nano | tera }
+r_number = { integer_number ~ ( exponent | ("." ~ raw_number ~ exponent?) | (r_prefix ~ raw_number?) )? }
+resistance = { SOI ~ silent_space? ~ r_number ~ silent_space? ~ ohm_unit? ~ silent_space? ~ EOI }
 
 // Superscript numbers
 ss_any = { ss_zero | ss_one | ss_two | ss_three | ss_four | ss_five | ss_six | ss_seven | ss_eight | ss_nine }
