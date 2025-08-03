@@ -6,3 +6,7 @@ edition = "2024"
 [dependencies]
 pest = "2.8"
 pest_derive = { version = "2.8" }
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+float-cmp = "0.10"
